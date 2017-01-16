@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>rr
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<style>
+			.mess-input{
+				width: 100%;
+				position:absolute;
+				bottom: 0;
+			}
+			/*三角形*/
+			.triangle-left {
+			    width: 0;
+			    height: 0;
+			    border-top: 10px solid transparent;
+			    border-right: 10px solid #007AFF;
+			    border-bottom: 5px solid transparent;
+			    position: absolute;
+			    top: 20px;
+			   	left: 54px;
+			}
+			/*三角*/
+			.triangle-right {
+			    width: 0;
+			    height: 0;
+			    border-top: 5px solid transparent;
+			    border-left: 10px solid #007AFF;
+			    border-bottom: 5px solid transparent;
+			    position: absolute;
+			    top: 20px;
+			   	right: 54px;
+			}
+			.chat-mess-left, .chat-mess-right{
+				position: relative;
+				padding: 10px;
+			}
+			.chat-mess-left .chat-user-img {
+				float: left;
+			}
+			.chat-mess-right .chat-user-img ,.chat-mess-right .chat-mess-content {
+				float: right;
+			}
+			.chat-mess-left .chat-user-img img, .chat-mess-right .chat-user-img img{
+				border-radius: 50%;
+			}
+			.chat-mess-left .chat-mess-content{
+				margin-left: 50px;
+			}
+			.chat-mess-right .chat-mess-content{
+				margin-right: 15px;
+			}
+			.chat-mess-right .chat-mess-content span, .chat-mess-left .chat-mess-content span{
+				max-width: 170px;
+				display: block;
+				padding: 10px;
+				background-color: #007AFF;
+				font-family: "微软雅黑";
+				font-size: 14px;
+				border-radius: 4px;
+				color: #FFFFFF;
+				letter-spacing: 2px;
+			}
+			.mui-content{
+				margin-bottom: 40px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="font-size: 25px;"></a>
+			<h1 id="title" class="mui-title">Dingo</h1>
+		</header>
+		<!--下拉刷新容器-->
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<!--数据列表-->
+				<div class="chat-mess-left mui-clearfix">
+					<div class="chat-user-img">
+						<img src="../images/timg.jpg" width="35" height="35"/>
+					</div>
+					<div class="chat-mess-content">
+						<div class="triangle-left"></div>
+						<span>
+							你好啊！强强强强强强强强强强强强强强强强围墙围起围墙围起围墙围起围墙为
+						</span>
+					</div>
+				</div>
+				<div class="chat-mess-right mui-clearfix">
+					<div class="chat-user-img">
+						<img src="../images/timg.jpg" width="35" height="35"/>
+					</div>
+					<div class="chat-mess-content">
+						<div class="triangle-right"></div>
+						<span>
+							你好啊！钱钱钱钱钱钱钱钱钱钱钱钱
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<footer class="mess-input">
+			<form class="mui-input-group">
+			    <div class="mui-input-row">
+			        <input type="text" class="mui-input-clear" placeholder="输入内容">
+			    </div>
+			</form>
+		</footer>
+			
+	</body>
+	<script src="../js/mui.min.js"></script>
+	<script type="text/javascript">
+		//启用双击监听
+		mui.init({
+			pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						height:50,//可选,默认50.触发下拉刷新拖动距离,
+					    contentdown : "",//可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+					    contentover : "",//可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+					    contentrefresh : "",//可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+						callback: pullupRefresh
+					},
+					up: {
+					    
+					}
+			}
+		});
+		
+		/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				}, 10);
+			}
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				}, 10);
+			}
+	
+		var contentWebview = null;
+		document.querySelector('header').addEventListener('doubletap',function () {
+			if(contentWebview==null){
+				contentWebview = plus.webview.currentWebview().children()[0];
+			}
+			contentWebview.evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,0,100)");
+		});
+		
+		//
+		//var header = mui('header');
+		window.addEventListener('resize', function() {
+			alert(3232);
+			header.style.display = document.body.clientHeight > 400 ? 'block' : 'none';
+		}, false);
+		
+	</script>
+	
+</html>
